@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setAppUsername } from '../components/usernameSlice';
 
-export default function Login(){
+export default function Signup(){
     const navigate = useNavigate();
+    const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const url = 'api/auth/authenticate'
+    const url = '/api/auth/user'
+    const dispatch = useDispatch()
 
-    const authenticate = async (e) => {
+
+    const register = async (e) => {
         e.preventDefault();
 
         const response = await fetch(url, {
@@ -18,19 +23,20 @@ export default function Login(){
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                "name": name,
                 "username": username,
                 "password": password
             })
         });
         const responseBody = await response.json();
-        if (response.status !== 200) {
+        if (response.status !== 201) {
             alert(JSON.stringify(responseBody));
         } else {
-            localStorage.setItem("access_token", responseBody.access_token);
-            console.log(responseBody);
+            dispatch(setAppUsername(name))
             navigate('/');
         }
     }
+
     return (
         <Box
             display="flex"
@@ -40,6 +46,12 @@ export default function Login(){
         >
             <div>
                 <form>
+                    <label>Name:</label>
+                    <input
+                        type="name"
+                        value = {name}
+                        onChange = {(e) => setName(e.target.value)}
+                    />
                     <label>Username:</label>
                     <input
                         type="username"
@@ -54,8 +66,8 @@ export default function Login(){
                     />
                     <button
                         type="submit"
-                        onClick={authenticate}
-                    >Login</button>
+                        onClick = {register}
+                    >Register</button>
                 </form>
             </div>
         </Box>

@@ -7,10 +7,13 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {Link, useNavigate} from "react-router-dom"
+import { useSelector } from 'react-redux';
 
 export default function ButtonAppBar() {
+  const username = useSelector(state => state.username.value)
   const navigate = useNavigate();
   const loginButtonHandler = () => navigate('/login');
+  const signUpButtonHandler = () => navigate('/signup');
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -25,6 +28,8 @@ export default function ButtonAppBar() {
             <MenuIcon />
           </IconButton>
           <Button color="inherit" onClick = {loginButtonHandler}>Login</Button>
+          <Button color="inherit" onClick = {signUpButtonHandler}>Sign Up</Button>
+          <span>{username}</span>
         </Toolbar>
       </AppBar>
     </Box>

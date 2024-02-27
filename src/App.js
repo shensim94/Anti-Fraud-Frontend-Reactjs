@@ -8,6 +8,7 @@ import StolenCards from './pages/StolenCards.js';
 import Transactions from './pages/Transactions.js';
 import Users from './pages/Users.js';
 import Login from './pages/Login.js';
+import Signup from './pages/Signup.js';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path='/transactions' element={<Transactions/>} />
           <Route path='/cards' element={<StolenCards/>} />
           <Route path='/login' element={<Login/>} />
+          <Route path='/signup' element={<Signup/>} />
         </Routes>
       </div>
     </Router>
